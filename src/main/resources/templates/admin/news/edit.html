@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<div th:insert="~{admin/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/admin/layouts/navbar}"></div>
+
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/admin/news/list">最新消息管理</a></li>
+						<li class="breadcrumb-item active">最新消息編輯</li>
+					</ul>
+					<form id="EditForm" class="mt-4" method="post" th:action="@{'/admin/news/update/'+${news.id}}"
+						enctype="multipart/form-data">
+						<div th:if="${success}" class="alert alert-success" role="alert">
+							[[${success}]]
+						</div>
+						<div th:if="${error}" class="alert alert-danger" role="alert">
+							[[${error}]]
+						</div>
+						<div class="form-group row">
+							<label for="picture" class="col-2 col-form-label text-right">圖片</label>
+							<div class="col-10">
+								<img id="pic" th:src="@{'/uploads/news/'+${news.picture}}" style="max-width: 10rem;">
+								<input type="file" class="form-control-file" id="new_picture" name="new_picture"
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="title" class="col-2 col-form-label text-right">標題</label>
+							<div class="col-10">
+								<input type="text" class="form-control" id="title" name="title"
+									th:value="${news.title}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="content" class="col-2 col-form-label text-right">遊戲描述</label>
+							<div class="col-10">
+								<textarea class="form-control" id="content" name="content" rows="5"
+									th:text="${news.content}">
+								</textarea>
+							</div>
+						</div>
+						<input type="hidden" name="picture" th:value="${news.picture}">
+						<div class="row p-3 justify-content-between">
+							<a class="btn btn-dark col-4 col-md-2" href="/admin/news/list">返回</a>
+							<button type="submit" class="btn btn-dark col-4 col-md-2">確定送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/admin/layouts/footer}"></div>
+	<script>
+		$('#new_picture').change(function () {
+			let file = $('#new_picture')[0].files[0];
+			let reader = new FileReader;
+			reader.onload = function (e) {
+				$('#pic').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		});
+		CKEDITOR.replace('content');
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="~{/web/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/web/layouts/navbar}"></div>
+	<div class="container my-3">
+		<div class="row justify-content-center ">
+			<div class="col-md-12">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">首頁</a></li>
+						<li class="breadcrumb-item"><a href="/news">新聞列表</a></li>
+						<li class="breadcrumb-item active" aria-current="page">新聞</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="m-3 p-3 pt-0 col-md-12 col-lg-12 bg-light" style="max-width:1110px;">
+				<div class="row p-3">
+					<small class="mb-3"><i class="fa fa-calendar-check-o mr-1" aria-hidden="true"></i>
+						[[${news.createTime}]]
+					</small>
+					<h5 class="col-lg-10">
+						[[${news.title}]]
+					</h5>
+					<hr class="col-lg-11">
+					<p class="col-lg-10">
+						[[${news.content}]]
+					</p>
+				</div>
+				<div class="row justify-content-start">
+					<a href="/news" class="btn btn-dark btn-sm ml-3">返回</a>
+				</div>
+				<hr class="col-lg-11">
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/web/layouts/footer}"></div>
+</body>
+
+</html>

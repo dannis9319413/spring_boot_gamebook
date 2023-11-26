@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="~{/web/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/web/layouts/navbar}"></div>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<nav class="my-3" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">首頁</a></li>
+						<li class="breadcrumb-item active" aria-current="page">聯絡我們</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="col-lg-10">
+				<p>有任何疑惑或對商品有問題可從以下方式聯絡我們，我們將會為您盡快做回覆!</p>
+				<hr>
+				<div class="row justify-content-center">
+					<div class="my-3 col-12 col-md-3">
+						<div class="row justify-content-center">
+							<i class="fa fa-phone fa-2x pt-2 col-2 col-md-3" aria-hidden="true"></i>
+							<div class="col-6 col-md-9">
+								<h6 class="mb-0">客服電話</h6>
+								<small>02-8101-8800</small>
+							</div>
+						</div>
+					</div>
+					<div class="my-3 col-12 col-md-5">
+						<div class="row justify-content-center">
+							<i class="fa fa-envelope fa-2x pt-2 col-2 col-md-3" aria-hidden="true"></i>
+							<div class="col-6 col-md-9">
+								<h6 class="mb-0">Email</h6>
+								<small>gamebook@gmail.com</small>
+							</div>
+						</div>
+					</div>
+					<div class="my-3 col-12 col-md-4">
+						<div class="row justify-content-center">
+							<i class="fa fa-sun-o fa-2x pt-2 col-2 col-md-3" aria-hidden="true"></i>
+							<div class=" col-6 col-md-9">
+								<h6 class="mb-0">服務時間</h6>
+								<small>08:50-18:00 (例假日休)</small>
+							</div>
+						</div>
+					</div>
+					<div class="my-3 col-12 col-md-4">
+						<div class="row justify-content-center">
+							<i class="fa fa-map-marker fa-3x pt-2 col-2 col-md-3" aria-hidden="true"></i>
+							<div class=" col-6 col-md-9">
+								<h6 class="mb-0">地址</h6>
+								<small>台北市信義區信義路五段7號89樓</small>
+							</div>
+						</div>
+					</div>
+					<div class="my-3 col-12 col-md-8">
+						<iframe
+							src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28913.42442341998!2d121.553424!3d25.0619536!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abb6da80a7ad%3A0xacc4d11dc963103c!2z5Y-w5YyXMTAx6LO854mp5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1700902251615!5m2!1szh-TW!2stw"
+							width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+							referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/web/layouts/footer}"></div>
+
+</body>
+
+</html>

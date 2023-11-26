@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<div th:insert="~{admin/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{admin/layouts/navbar}"></div>
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"> <a href="/admin/product/list">商品管理</a></li>
+						<li class="breadcrumb-item active">新增商品</li>
+					</ul>
+					<div th:if="${error}" class="alert alert-danger" role="alert">
+						[[${error}]]
+					</div>
+					<form id="AddForm" class="mt-4" method="post" action="/admin/product/store"
+						enctype="multipart/form-data">
+						<div class="form-group row">
+							<label for="folder" class="col-2 col-form-label text-right">*資料夾名稱</label>
+							<div class="col-10">
+								<input type="text" class="form-control" id="folder" name="folder"
+									placeholder="*請勿輸入英數以外和特殊字元">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="category_id" class="col-2 col-form-label text-right">*商品類別</label>
+							<div class="col-10">
+								<label for="category_id"></label>
+								<select class="form-control" id="category_id" name="category_id">
+									<option th:each="category:${categories}" th:value="${category.id}"
+										th:text="${category.category}">
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="header" class="col-2 col-form-label text-right">標題圖片</label>
+							<div class="col-10">
+								<img id="pic" src="">
+								<input type="file" class="form-control-file" id="header" name="header"
+									autocomplete="off">
+							</div>
+						</div>
+						<div th:each="i: ${#numbers.sequence(1, 4)}" class="form-group row">
+							<label th:for="'picture_'+${i}" class="col-2 col-form-label text-right">圖片[[${i}]]</label>
+							<div class="col-10">
+								<img id="pic" src="">
+								<input type="file" class="form-control-file" th:id="'picture_'+${i}"
+									th:name="'picture_'+${i}" autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-2 col-form-label text-right">*遊戲名稱</label>
+							<div class="col-10">
+								<input type="text" class="form-control" id="name" name="name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="description" class="col-2 col-form-label text-right">*遊戲描述</label>
+							<div class="col-10">
+								<textarea id="description" rows="5" class="form-control" name="description"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="price" class="col-2 col-form-label text-right">*價格</label>
+							<div class="col-10">
+								<input type="text" class="form-control" id="price" name="price">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="is_pre" class="col-2 col-form-label text-right">預購</label>
+							<div class="col-10">
+								<select class="form-control" id="is_pre" name="is_pre">
+									<option value="0">否</option>
+									<option value="1">是</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="is_new" class="col-2 col-form-label text-right">新品</label>
+							<div class="col-10">
+								<select class="form-control" id="is_new" name="is_new">
+									<option value="0">否</option>
+									<option value="1">是</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="is_special" class="col-2 col-form-label text-right">特惠</label>
+							<div class="col-10">
+								<select class="form-control" id="is_special" name="is_special">
+									<option value="0">否</option>
+									<option value="1">是</option>
+								</select>
+							</div>
+						</div>
+						<div class="row p-3 justify-content-between">
+							<a class="btn btn-dark col-4 col-md-2" href="/admin/product/list">返回</a>
+							<button type="submit" class="btn btn-dark col-4 col-md-2">確定送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{admin/layouts/footer}"></div>
+	<script>
+		$('#picture').change(function () {
+			let file = $('#picture')[0].files[0];
+			let reader = new FileReader;
+			reader.onload = function (e) {
+				$('#pic').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		});
+
+		CKEDITOR.replace('description');
+	</script>
+</body>
+
+</html>

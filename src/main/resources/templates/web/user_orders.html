@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="~{/web/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/web/layouts/navbar}"></div>
+	<div class="container">
+		<div class="row">
+			<div class="my-3 col-md-12">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">首頁</a></li>
+						<li class="breadcrumb-item active" aria-current="page">我的訂單</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="mb-4 col-md-12 col-lg-2 text-center" style="font-size: 18px;">
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action disabled bg-light">
+						<i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>會員專區
+					</a>
+					<a href="/user/orders" class="list-group-item list-group-item-action bg-dark text-light">
+						<i class="fa fa-list mr-1" aria-hidden="true"></i>我的訂單
+					</a>
+					<a href="/user/account" class="list-group-item list-group-item-action">
+						<i class="fa fa-user mr-1" aria-hidden="true"></i>會員資料
+					</a>
+					<a href="/logout" class="list-group-item list-group-item-action">
+						<i class="fa fa-sign-out mr-1" aria-hidden="true"></i>登出
+					</a>
+				</div>
+			</div>
+			<div class="table-resposive col-md-12 col-lg-10" style="font-size: 16px;">
+				<table class="table bg-light">
+					<h5>以下是您的訂單</h5>
+					<p>如有任何問題請至<a href="/contact">聯絡我們</a>聯繫我們</p>
+					<tr>
+						<td>訂單編號</td>
+						<td>購買日期</td>
+						<td>總金額</td>
+						<td>訂單狀態</td>
+						<td>訂單明細</td>
+					</tr>
+					<tr th:each="order:${orders}" class="my-3">
+						<td>[[${order.order_no}]]</td>
+						<td>[[${order.create_time}]]</td>
+						<td>NT$ [[${order.total + order.shipping}]]</td>
+						<td>
+							<span th:if="${order.status} == 1" class="badge badge-success" style="font-size: 17px;">
+								[[${status.get(order.status)}]]
+							</span>
+							<span th:if="${order.status} != 1" class=" badge badge-primary" style="font-size: 17px;">
+								[[${status.get(order.status)}]]
+							</span>
+						</td>
+						<td>
+							<a th:href="@{'/user/order/'+${order.id}}" class="badge badge-info"
+								style="font-size: 17px;">查看明細
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div th:if="${orders.size()} == 0" class="col-md-12 col-lg-9">
+				<h5>目前沒有任何訂單，請至<a href="/product?category=">遊戲商店</a>選購您的商品。</h5>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/web/layouts/footer}"></div>
+</body>
+
+</html>

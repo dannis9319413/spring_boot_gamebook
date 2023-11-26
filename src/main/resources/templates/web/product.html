@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="~{/web/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/web/layouts/navbar}"></div>
+	<div class="container my-3">
+		<div class="row">
+			<div class="col-md-12">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">首頁</a></li>
+						<li class="breadcrumb-item"><a href="/product?category=">商店</a></li>
+						<li class="breadcrumb-item active" aria-current="page">[[${product.name}]]</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="mb-3 col-md-12 col-lg-2">
+				<div class="list-group " style="font-size: 18px;text-align: center;">
+					<a href="/product?category="
+						class="list-group-item list-group-item-action bg-dark text-light">全部</a>
+					<a th:each="category:${categories}" th:href="@{'/product?category='+${category.id}}"
+						class="list-group-item list-group-item-action">
+						[[${category.category}]]
+					</a>
+
+				</div>
+			</div>
+			<div class="col-lg-10">
+				<div class="row">
+					<img class="col-md-12" th:src="@{'/uploads/product/'+${product.folder}+'/'+${product.header}}">
+				</div>
+				<div class="row">
+					<div class="main col-md-12"
+						data-flickity='{ "wrapAround": true ,"autoPlay":true, "pageDots": false, "prevNextButtons": false}'>
+						<div th:each="image:${images}" class="cell bg-light">
+							<img th:src="@{'/uploads/product/'+${product.folder}+'/'+${image}}"
+								style="max-width:22rem;">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-12">
+			<div class="row justify-content-end">
+				<div class="col-lg-10">
+					<form class="alert alert-secondary row justify-content-end" role="alert" method="post"
+						th:action="@{'/cart/add/'+${product.id}}">
+						<div class="row justify-content-end">
+							<input class="form-control col-3 col-lg-2" type="number" name="quantity" min=1 value="1">
+							<h6 class="px-3 col-4 col-lg-4 align-self-center">NT$ [[${product.price}]]</h6>
+							<a th:if="${isInCart}" href="/cart" class="btn btn-dark">於購物車內</a>
+							<button th:if="${!isInCart}" type="submit" class="btn btn-dark">加入購物車</button>
+						</div>
+					</form>
+				</div>
+				<div id="content" class="col-lg-10 bg-light">
+					<div class="row p-3">
+						<h2>[[${product.name}]]</h2>
+						<p>[[${product.description}]]</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/web/layouts/footer}"></div>
+	<script>
+		$(window).on("load", function () {
+			$(".main").flickity();
+		});
+	</script>
+</body>
+
+</html>

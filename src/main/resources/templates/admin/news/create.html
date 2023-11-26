@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<div th:insert="~{admin/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/admin/layouts/navbar}"></div>
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"> <a href="/admin/news/list">最新消息管理</a></li>
+						<li class="breadcrumb-item active">新增最新消息</li>
+					</ul>
+					<div th:if="${error}" class="alert alert-danger" role="alert">
+						[[${error}]]
+					</div>
+					<form id="AddForm" class="mt-4" method="post" action="/admin/news/store"
+						enctype="multipart/form-data">
+						<div class="form-group row"> <label for="picture"
+								class="col-2 col-form-label text-right">圖片</label>
+							<div class="col-10">
+								<img id="pic" src="" alt="">
+								<input type="file" class="form-control-file" id="picture" name="picture"
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="title" class="col-2 col-form-label text-right">*標題</label>
+							<div class="col-10">
+								<input type="text" class="form-control" id="title" name="title">
+							</div>
+						</div>
+						<div class="form-group row"> <label for="content"
+								class="col-2 col-form-label text-right">*內容</label>
+							<div class="col-10">
+								<textarea id="content" rows="5" class="form-control" name="content"></textarea>
+							</div>
+						</div>
+						<div class="row p-3 justify-content-between">
+							<a class="btn btn-dark col-4 col-md-2" href="/admin/news/list">返回</a>
+							<button type="submit" class="btn btn-dark col-4 col-md-2">確定送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/admin/layouts/footer}"></div>
+	<script>
+		$('#picture').change(function () {
+			let file = $('#picture')[0].files[0];
+			let reader = new FileReader;
+			reader.onload = function (e) {
+				$('#pic').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		});
+
+		CKEDITOR.replace('content');
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<div th:insert="~{admin/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{admin/layouts/navbar}"></div>
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"> <a href="/admin/user/list">會員管理</a></li>
+						<li class="breadcrumb-item active">會員編輯</li>
+					</ul>
+					<form class="mt-4" method="post" th:action="@{'/admin/user/updatePassword/'+${user.id}}">
+						<div th:if="${success_password}" class="alert alert-success" role="alert">
+							[[${success_password}]]
+						</div>
+						<div th:if="${error_password}" class="alert alert-danger" role="alert">
+							[[${error_password}]]
+						</div>
+						<div class="form-group row">
+							<label for="password" class="col-3 col-form-label text-right">舊密碼</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="password" name="password">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="new_password" class="col-3 col-form-label text-right">新密碼</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="new_password" name="new_password">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="confirm_password" class="col-3 col-form-label text-right">確認新密碼</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="confirm_password" name="confirm_password">
+							</div>
+							<div class="col-md-5">
+								<div class="row justify-content-center my-3">
+									<button type="submit" class="btn btn-dark col-6">更新密碼</button>
+								</div>
+							</div>
+						</div>
+					</form>
+					<form class="mt-4" method="post" th:action="@{'/admin/user/update/'+${user.id}}">
+						<div th:if="${success}" class="alert alert-success" role="alert">
+							[[${success}]]
+						</div>
+						<div th:if="${error}" class="alert alert-danger" role="alert">
+							[[${error}]]
+						</div>
+						<div class="form-group row">
+							<label for="email" class="col-3 col-form-label text-right">Email</label>
+							<div class="col-8 col-md-5">
+								<input type="email" class="form-control" id="email" name="email"
+									th:value="${user.email}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-3 col-form-label text-right">姓名</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="name" name="name" th:value="${user.name}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="gender" class="col-3 col-form-label text-right">性別</label>
+							<div class="col-8 col-md-4">
+								<select class="form-control" id="gender" name="gender">
+									<option th:selected="${user.gender} == '0'" value="0">未知</option>
+									<option th:selected="${user.gender} == '1'" value="1">男</option>
+									<option th:selected="${user.gender} == '2'" value="2">女</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="phone" class="col-3 col-form-label text-right">電話</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="phone" name="phone"
+									th:value="${user.phone}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="mobile" class="col-3 col-form-label text-right">手機</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="mobile" name="mobile"
+									th:value="${user.mobile}">
+							</div>
+						</div>
+						<div id="twzipcode" class="form-group row justify-content-center">
+							<div class="form-group col-3 col-md-2">
+								<label for="zipcode">郵遞區號</label>
+								<input type="text" class="form-control" id="zipcode" name="zipcode">
+							</div>
+							<div class="form-group col-4 col-md-3">
+								<label for="county">縣市</label>
+								<select id="county" class="form-control" name="county">
+									<option selected></option>
+								</select>
+							</div>
+							<div class="form-group col-4 col-md-3">
+								<label for="district">區域</label>
+								<select type="text" class="form-control" id="district" name="district"></select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="address" class="col-3 col-form-label text-right">地址</label>
+							<div class="col-8 col-md-6">
+								<input type="text" class="form-control" id="address" name="address"
+									th:value="${user.address}">
+							</div>
+						</div>
+						<div class="row p-3 justify-content-between">
+							<a class="btn btn-dark col-4 col-md-2" href="/admin/user/list">返回</a>
+							<button type="submit" class="btn btn-dark col-4 col-md-2">確定送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{admin/layouts/footer}"></div>
+	<script>
+		$(function () {
+			$("#twzipcode").twzipcode({
+				'zipcodeSel': "[[${user.zip}]]",
+				'countySel': "[[${user.county}]]",
+				'districtSel': "[[${user.district}]]",
+			});
+			$('#twzipcode').find('select[name="county"]').eq(1).remove();
+			$('#twzipcode').find('select[name="district"]').eq(1).remove();
+			$('#twzipcode').find('input[name="zipcode"]').eq(1).remove();
+		});
+	</script>
+
+</body>
+
+</html>

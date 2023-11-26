@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<div th:insert="~{admin/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{admin/layouts/navbar}"></div>
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"> <a href="/admin/order/list">訂單管理</a></li>
+						<li class="breadcrumb-item active">訂單編輯</li>
+					</ul>
+					<form class="mt-4" method="post" th:action="@{'/admin/order/update/'+${order.id}}">
+						<div th:if="${success}" class="alert alert-success" role="alert">
+							[[${success}]]
+						</div>
+						<div th:if="${error}" class="alert alert-danger" role="alert">
+							[[${error}]]
+						</div>
+						<div class="form-group row">
+							<label for="order_no" class="col-3 col-form-label text-right">訂單號碼</label>
+							<div class="col-8 col-md-5">
+								<input type="text" class="form-control" id="order_no" name="order_no"
+									th:value="${order.orderNo}" disabled>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="status" class="col-3 col-form-label text-right">訂單狀態</label>
+							<div class="col-8 col-md-4">
+								<select class="form-control" id="status" name="status">
+									<option th:selected="${order.status} == 0" value="0">未付款</option>
+									<option th:selected="${order.status} == 1" value="1">已付款</option>
+									<option th:selected="${order.status} == 2" value="2">已出貨</option>
+									<option th:selected="${order.status} == 3" value="3">已送達(交易完成)</option>
+									<option th:selected="${order.status} == 4" value="4">取消訂單</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="total" class="col-3 col-form-label text-right">商品總額</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="total" name="total"
+									th:value="${order.total}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="shipping" class="col-3 col-form-label text-right">運費</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="shipping" name="shipping"
+									th:value="${order.shipping}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-3 col-form-label text-right">姓名</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="name" name="name" th:value="${order.name}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="mobile" class="col-3 col-form-label text-right">手機</label>
+							<div class="col-8 col-md-4">
+								<input type="text" class="form-control" id="mobile" name="mobile"
+									th:value="${order.mobile}">
+							</div>
+						</div>
+						<div id="twzipcode" class="form-group row justify-content-center">
+							<div class="form-group col-3 col-md-2">
+								<label for="zipcode">郵遞區號</label>
+								<input type="text" class="form-control" id="zipcode" name="zipcode">
+							</div>
+							<div class="form-group col-4 col-md-3">
+								<label for="county">縣市</label>
+								<select id="county" class="form-control" name="county">
+									<option selected></option>
+								</select>
+							</div>
+							<div class="form-group col-4 col-md-3">
+								<label for="district">區域</label>
+								<select type="text" class="form-control" id="district" name="district"></select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="address" class="col-3 col-form-label text-right">地址</label>
+							<div class="col-8 col-md-6">
+								<input type="text" class="form-control" id="address" name="address"
+									th:value="${order.address}">
+							</div>
+						</div>
+						<div class="row p-3 justify-content-between">
+							<a class="btn btn-dark col-4 col-md-2" href="/admin/order/list">返回</a>
+							<button type="submit" class="btn btn-dark col-4 col-md-2">確定送出</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{admin/layouts/footer}"></div>
+	<script>
+		$(function () {
+			$("#twzipcode").twzipcode({
+				'zipcodeSel': "[[${order.zip}]]",
+				'countySel': "[[${order.county}]]",
+				'districtSel': "[[${order.district}]]"
+			});
+			$('#twzipcode').find('select[name="county"]').eq(1).remove();
+			$('#twzipcode').find('select[name="district"]').eq(1).remove();
+			$('#twzipcode').find('input[name="zipcode"]').eq(1).remove();
+		});
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="~{/web/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/web/layouts/navbar}"></div>
+	<div class="container my-4">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">首頁</a></li>
+						<li class="breadcrumb-item" aria-current="page">
+							<a href="/checkout/receiver">結帳 - 填寫收件者資料</a>
+						</li>
+						<li class="breadcrumb-item active" aria-current="page">結帳 - 選擇運送方式</li>
+					</ol>
+				</nav>
+			</div>
+			<form class="my-3 col-lg-12" method="post" action="/checkout/confirm">
+				<div class="row">
+					<h4 class="text-center mb-4 col-lg-8"><i class="fa fa-truck mr-2" aria-hidden="true"></i>選擇運送方式</h4>
+					<div class="col-lg-8">
+						<div class="row justify-content-center">
+							<div class="card col-10 col-md-8 col-lg-5" style="width: 15rem;">
+								<img src="/img/payment/shop.jpg" class="card-img-top my-4">
+								<div class="card-body">
+									<br>
+									<input id="shop" type="radio" name="delivery" value="shop" checked>超商取貨付款
+									NT$80</input>
+								</div>
+							</div>
+							<div class="card col-10 col-md-8 col-lg-6" style="width: 15rem;">
+								<div class="row justify-content-center">
+									<img src="/img/payment/black_cat.jpg" class="card-img-top"
+										style="max-width: 15rem;">
+									<div class="card-body">
+										<input id="cat" type="radio" name="delivery" value="cat">貨到付款 NT$150</input>
+									</div>
+								</div>
+							</div>
+							<div class="mt-3 p-3 col-md-12">
+								<p>*購物滿<span style="color:red">3000</span>免運費，只限台灣本島，離島需加上稅金與運費</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-4">
+						<table class="table table-sm text-center bg-light">
+							<tr>
+								<td>商品總額</td>
+								<td>NT$ [[${total}]]</td>
+							</tr>
+							<tr>
+								<td>運費</td>
+								<td id="shipping">NT$ [[${total} >= 3000 ? 0 : 80]]</td>
+							</tr>
+							<tr>
+								<td>總金額</td>
+								<td id="final_total">NT$ [[${total} >= 3000 ? ${total} : ${total} + 80]]</td>
+							</tr>
+						</table>
+					</div>
+					<div class="px-4 col-md-12">
+						<div class="row justify-content-between">
+							<a href="/checkout/receiver" class="btn btn-light col-4 col-md-3 col-lg-2">
+								<i class="fa fa-chevron-left mr-1" aria-hidden="true"></i>上一頁
+							</a>
+							<button type="submit" class="btn btn-dark col-4 col-md-3 col-lg-2">下一步
+								<i class="fa fa-chevron-right ml-1" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div th:insert="~{/web/layouts/footer}"></div>
+	<script>
+		let total = "[[${total}]]";
+		total = parseInt(total);
+		$('input[name="delivery"]').on('change', function () {
+			let shipping = 0;
+			if (total < 3000) {
+				shipping = ($(this).val() == 'shop') ? 80 : 150;
+			}
+			$('#shipping').text(`$NT ${shipping}`);
+			$('#final_total').text(`$NT ${total + shipping}`);
+		});
+	</script>
+</body>
+
+</html>

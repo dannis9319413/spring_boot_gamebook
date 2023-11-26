@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="~{/web/layouts/head}"></div>
+
+<body>
+	<div th:insert="~{/web/layouts/navbar}"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="my-3" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">首頁</a></li>
+						<li class="breadcrumb-item active" aria-current="page">商店</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="mb-3 col-md-12 col-lg-2">
+				<div class="list-group " style="font-size: 18px;text-align: center;">
+					<a href="/product?category=" class="list-group-item list-group-item-action bg-dark text-light">
+						全部
+					</a>
+					<a th:each="category:${categories}" th:href="@{'/product?category='+${category.id}}"
+						class="list-group-item list-group-item-action">[[${category.category}]]</a>
+				</div>
+			</div>
+			<div class="col-lg-10">
+				<div class="row justify-content-center ">
+					<div th:each="product:${products}" class="card m-1 p-1 col-10 col-md-5 col-lg-5 col-xl-3"
+						style="max-width: 18rem;">
+						<a th:href="@{'/product/'+${product.id}}">
+							<img class="card-img-top"
+								th:src="@{'/uploads/product/'+${product.folder}+'/'+${product.header}}"
+								style="max-height: 7rem">
+						</a>
+						<div class="row card-body justify-content-center">
+							<h6 class="card-text my-3 col-md-12">name</h6>
+							<p class="text-right col-md-12">NT$ [[${product.price}]]</p>
+							<a th:href="@{'/product/'+${product.id}}">
+								<button class="btn btn-dark btn-sm col-12 align-self-end">立即購買</button>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{/web/layouts/footer}"></div>
+
+</body>
+
+</html>
